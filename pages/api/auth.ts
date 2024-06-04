@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(200).json({ token });
       break;
 
-    case 'POST':
+    case 'PUT':
       const { newEmail, newPassword } = req.body;
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
 
     default:
-      res.setHeader('Allow', ['POST']);
+      res.setHeader('Allow', ['POST', 'PUT']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

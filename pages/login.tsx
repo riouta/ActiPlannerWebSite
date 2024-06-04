@@ -1,5 +1,3 @@
-// pages/login.tsx
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Button from '../components/Button';
@@ -24,14 +22,14 @@ const LoginPage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
       
-      if (data.status === 200) {
+      if (response.status === 200) {
         // Successful login
-        console.log(data.message);
+        console.log(data.token);
       } else {
         setError(data.error || 'Failed to login. Please check your credentials.');
       }

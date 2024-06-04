@@ -20,14 +20,14 @@ const SignupPage: React.FC = () => {
     try {
       setLoading(true);
       setError('');
-      // Implement signup logic here
-      // Example:
-      // const response = await signup({ email, password });
-      // if (response.status === 200) {
-      //   // Successful signup
-      // } else {
-      //   setError('Failed to sign up. Please try again later.');
-      // }
+
+      const response = await axios.put('/api/auth', { newEmail: email, newPassword: password });
+      if (response.status === 201) {
+        // Successful signup
+        console.log(response.data.message);
+      } else {
+        setError('Failed to sign up. Please try again later.');
+      }
     } catch (error) {
       setError('Failed to sign up. Please try again later.');
     } finally {
