@@ -1,0 +1,4 @@
+#untracked files that Git should ignore
+node_modules/
+.next/
+.env
