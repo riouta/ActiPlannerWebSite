@@ -1,5 +1,3 @@
-// pages/index.tsx
-
 import React from 'react';
 import Link from 'next/link';
 import ActivityCard from '../components/ActivityCard';

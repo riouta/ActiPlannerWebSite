@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import prisma from '../../prisma/prisma';
 
 interface User {
+  username: string;
   email: string;
   password: string;
 }
@@ -14,10 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { method } = req;
 
   switch (method) {
-    case 'POST':
+    case 'POST': // For logging in
       const { email, password } = req.body;
 
-      const user = users.find((user) => user.email === email);
+      const user = await prisma.user.findUnique({ where: { email } });
       if (!user) {
         res.status(401).json({ error: 'Invalid credentials' });
         return;
@@ -33,13 +34,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(200).json({ token });
       break;
 
-    case 'PUT':
-      const { newEmail, newPassword } = req.body;
+    case 'PUT': // For signing up
+      const { newEmail, newPassword, newUsername } = req.body;
+
+      if (!newUsername) {
+        res.status(400).json({ error: 'Username is required' });
+        return;
+      }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
-      users.push({ email: newEmail, password: hashedPassword });
+      const newUser = await prisma.user.create({
+        data: {
+          email: newEmail,
+          password: hashedPassword,
+          username: newUsername,
+        },
+      });
 
-      res.status(201).json({ message: 'User created' });
+      res.status(201).json({ message: 'User created', user: newUser });
       break;
 
     default:

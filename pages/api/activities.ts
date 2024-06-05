@@ -18,41 +18,63 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
+  if (!session.user || !session.user.id) {
+    res.status(400).json({ error: 'User information is missing' });
+    return;
+  }
+
+  const userId = session.user.id as string; // Type assertion to ensure TypeScript knows userId is a string
+
   const { method } = req;
 
   switch (method) {
     case 'GET':
       if (req.query.id) {
-        const activity = activities.find((activity) => activity.id === req.query.id);
+        const activity = await prisma.activity.findUnique({ where: { id: Number(req.query.id) } });
         if (!activity) {
           res.status(404).json({ error: 'Activity not found' });
           return;
         }
         res.status(200).json(activity);
       } else {
+        const activities = await prisma.activity.findMany();
         res.status(200).json(activities);
       }
       break;
 
     case 'POST':
-      const newActivity = { ...req.body, id: String(activities.length + 1) };
-      activities.push(newActivity);
-      res.status(201).json(newActivity);
+      try {
+        const newActivity = await prisma.activity.create({
+          data: {
+            ...req.body,
+            userId: userId, // Use the userId variable here
+          },
+        });
+        res.status(201).json(newActivity);
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to create activity' });
+      }
       break;
 
     case 'PUT':
-      const index = activities.findIndex((activity) => activity.id === req.query.id);
-      if (index === -1) {
+      try {
+        const updatedActivity = await prisma.activity.update({
+          where: { id: Number(req.query.id) },
+          data: { ...req.body },
+        });
+        res.status(200).json(updatedActivity);
+      } catch (error) {
         res.status(404).json({ error: 'Activity not found' });
-        return;
       }
-      activities[index] = { ...activities[index], ...req.body };
-      res.status(200).json(activities[index]);
       break;
 
     case 'DELETE':
-      activities = activities.filter((activity) => activity.id !== req.query.id);
-      res.status(204).end();
+      try {
+        await prisma.activity.delete({ where: { id: Number(req.query.id) } });
+        res.status(204).end();
+      } catch (error) {
+        res.status(404).json({ error: 'Activity not found' });
+      }
       break;
 
     default:

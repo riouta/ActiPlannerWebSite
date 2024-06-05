@@ -5,6 +5,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import axios from 'axios';
 
 const SignupPage: React.FC = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,7 +22,7 @@ const SignupPage: React.FC = () => {
       setLoading(true);
       setError('');
 
-      const response = await axios.put('/api/auth', { newEmail: email, newPassword: password });
+      const response = await axios.put('/api/auth', { newUsername: username, newEmail: email, newPassword: password });
       if (response.status === 201) {
         // Successful signup
         console.log(response.data.message);
@@ -40,6 +41,15 @@ const SignupPage: React.FC = () => {
       <h2>Sign Up</h2>
       {error && <ErrorAlert message={error} />}
       <form onSubmit={(e) => { e.preventDefault(); handleSignup(); }}>
+      
+      <label>Username:</label>
+        <input
+          type="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+
         <label>Email:</label>
         <input
           type="email"
@@ -47,6 +57,7 @@ const SignupPage: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        ""
         <label>Password:</label>
         <input
           type="password"

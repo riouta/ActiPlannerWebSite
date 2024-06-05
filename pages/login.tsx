@@ -4,7 +4,6 @@ import Button from '../components/Button';
 import ErrorAlert from '../components/ErrorAlert';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,8 +14,7 @@ const LoginPage: React.FC = () => {
     try {
       setLoading(true);
       setError('');
-      
-      // Adjusted fetch request to match the updated handler
+
       const response = await fetch('/api/auth', {
         method: 'POST',
         headers: {
@@ -26,9 +24,10 @@ const LoginPage: React.FC = () => {
       });
 
       const data = await response.json();
-      
+
       if (response.status === 200) {
         // Successful login
+        localStorage.setItem('token', data.token);
         console.log(data.token);
       } else {
         setError(data.error || 'Failed to login. Please check your credentials.');
