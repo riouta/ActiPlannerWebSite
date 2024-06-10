@@ -1,9 +1,9 @@
-// pages/api/activities.ts
-
+//route handler for operations related to editin & deleting specific task by id
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import prisma from '../../prisma/prisma';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
@@ -18,44 +18,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const userId = session.user.id;
+  const userId = Number(session.user.id);
+  const activityId = parseInt(req.query.id as string);
 
-  const { method } = req;
-
-  switch (method) {
+  switch (req.method) {
     case 'GET':
-      if (req.query.id) {
-        const activity = await prisma.activity.findUnique({ where: { id: Number(req.query.id) } });
+      try {
+        const activity = await prisma.activity.findFirst({
+          where: { id: activityId, userId: userId },
+        });
         if (!activity) {
           res.status(404).json({ error: 'Activity not found' });
           return;
         }
         res.status(200).json(activity);
-      } else {
-        const activities = await prisma.activity.findMany();
-        res.status(200).json(activities);
-      }
-      break;
-
-    case 'POST':
-      try {
-        const newActivity = await prisma.activity.create({
-          data: {
-            ...req.body,
-            userId: userId,
-          },
-        });
-        res.status(201).json(newActivity);
       } catch (error) {
-        res.status(500).json({ error: 'Failed to create activity' });
+        res.status(500).json({ error: 'Failed to fetch activity' });
       }
       break;
 
     case 'PUT':
       try {
+        const { name, description, date, time, adress } = req.body;
         const updatedActivity = await prisma.activity.update({
-          where: { id: Number(req.query.id) },
-          data: { ...req.body },
+          where: { id: activityId, userId: userId },
+          data: { name, description, date, time, adress },
         });
         res.status(200).json(updatedActivity);
       } catch (error) {
@@ -65,7 +52,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     case 'DELETE':
       try {
-        await prisma.activity.delete({ where: { id: Number(req.query.id) } });
+        await prisma.activity.delete({
+          where: { id: activityId, userId: userId },
+        });
         res.status(204).end();
       } catch (error) {
         res.status(404).json({ error: 'Activity not found' });
@@ -73,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
 
     default:
-      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
