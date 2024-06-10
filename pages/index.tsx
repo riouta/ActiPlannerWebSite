@@ -16,9 +16,13 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchActivities = async () => {
-      const response = await fetch("/api/activities");
-      const data = await response.json();
-      setActivities(data);
+      try {
+        const response = await fetch("/api/activities");
+        const data = await response.json();
+        setActivities(data);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+      }
     };
 
     fetchActivities();
@@ -48,7 +52,7 @@ const HomePage = () => {
               </span>
             </li>
           ))}
-          {activities?.length < 1 && <div className="py-2">No data</div>}
+          {activities.length === 0 && <div className="py-2">No data</div>}
         </ul>
       </div>
       <Head>
