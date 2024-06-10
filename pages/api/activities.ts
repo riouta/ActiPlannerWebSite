@@ -1,14 +1,8 @@
+// pages/api/activities.ts
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import prisma from '../../prisma/prisma';
-
-interface Activity {
-  id: string;
-  name: string;
-  description: string;
-}
-
-let activities: Activity[] = [];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
@@ -23,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const userId = session.user.id as string; // Type assertion to ensure TypeScript knows userId is a string
+  const userId = session.user.id;
 
   const { method } = req;
 
@@ -47,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const newActivity = await prisma.activity.create({
           data: {
             ...req.body,
-            userId: userId, // Use the userId variable here
+            userId: userId,
           },
         });
         res.status(201).json(newActivity);

@@ -107,3 +107,9 @@ To start the development server, run:
 ```bash
 npm run dev
 ```
+
+Step-by-Step Guide to Run SQL Queries via SQLite CLI:
+Open terminal on VSCode ->
+navigate to pjt directory using cd path/ ->
+Run the following command to open the SQLite database using the SQLite CLI tool: sqlite3 prisma/dev.db ->
+Type the SQL query

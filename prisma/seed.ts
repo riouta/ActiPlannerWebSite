@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
+// initialize Prisma Client
 const prisma = new PrismaClient();
 
 async function main() {
@@ -24,27 +25,32 @@ async function main() {
       adress: '456 Cooking School',
     },
   });
-
-  // Create a sample user with activities
-  const user = await prisma.user.create({
-    data: {
-      username: 'sampleuser',
-      email: 'user@example.com',
-      password: 'securepassword',
-      activities: {
-        connect: [{ id: activity1.id }, { id: activity2.id }],
-      },
+  //upsert fct will only create new activity if no activity matches the where cdt
+  const activity3 = await prisma.activity.upsert({
+    where: { name: 'sheep riding'},
+    update: {},
+    create: {
+      name: 'sheep riding',
+      description: 'A fun sheep riding.',
+      date: new Date('2024-01-01'),
+      time: '07:00',
+      adress: '13 sheep field', 
     },
   });
 
-  console.log({ user, activity1, activity2 });
+  // Create a sample user with activities
+  const users = await prisma.user.findMany()
+  console.log(users)
+
 }
 
+// execute the main function
 main()
   .catch((e) => {
     console.error(e);
     process.exit(1);
   })
   .finally(async () => {
+    // close Prisma Client at the end
     await prisma.$disconnect();
   });

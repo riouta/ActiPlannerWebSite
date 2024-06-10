@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { PrismaClient } from '@prisma/client';
 
 interface Activity {
   id: string;
