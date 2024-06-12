@@ -7,6 +7,9 @@ interface Activity {
   id: string;
   name: string;
   description: string;
+  date: string;
+  time: string;
+  adress: string;
 }
 
 const ActivityDetailPage: React.FC = () => {
@@ -18,7 +21,7 @@ const ActivityDetailPage: React.FC = () => {
     if (id) {
       const fetchActivity = async () => {
         try {
-          const response = await fetch(`/api/activities/${id}`);
+          const response = await fetch(`/api/activities`);
           const data = await response.json();
           setActivity(data);
         } catch (error) {
@@ -38,12 +41,15 @@ const ActivityDetailPage: React.FC = () => {
     <div>
       <h1>{activity.name}</h1>
       <p>{activity.description}</p>
-      <Link href={`/activities/edit/${id}`}>
+      <p>{activity.date}</p>
+      <p>{activity.time}</p>
+      <p>{activity.adress}</p>
+      <Link href={`/CRUD/edit`}>
         <button>Edit</button>
       </Link>
       <button onClick={async () => {
-        await fetch(`/api/activities/${id}`, { method: 'DELETE' });
-        router.push('/activities');
+        await fetch(`/api/activities`, { method: 'DELETE' });
+        router.push('/');
       }}>Delete</button>
     </div>
   );

@@ -22,10 +22,17 @@ const SignupPage: React.FC = () => {
       setLoading(true);
       setError('');
 
+      // Performs client-side validation
+      // if (!username || !email || !password || !confirmPassword) {
+      //   setError('All fields are required');
+      //   return;
+      // }
+
       const response = await axios.put('/api/auth', { newUsername: username, newEmail: email, newPassword: password });
       if (response.status === 201) {
         // Successful signup
         console.log(response.data.message);
+        window.location.href = '/login';
       } else {
         setError('Failed to sign up. Please try again later.');
       }

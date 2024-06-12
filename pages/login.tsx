@@ -29,6 +29,7 @@ const LoginPage: React.FC = () => {
         // Successful login
         localStorage.setItem('token', data.token);
         console.log(data.token);
+        window.location.href = '/CRUD/add';
       } else {
         setError(data.error || 'Failed to login. Please check your credentials.');
       }

@@ -113,3 +113,18 @@ Open terminal on VSCode ->
 navigate to pjt directory using cd path/ ->
 Run the following command to open the SQLite database using the SQLite CLI tool: sqlite3 prisma/dev.db ->
 Type the SQL query
+
+1. Folder Structure
+
+*pages/api: This should contain your API routes.
+*pages/api/auth: Contains authentication related routes.
+*pages/api/activities: Contains activity-related routes.
+*pages/CRUD: Contains the frontend pages for CRUD operations.
+
+2. Files
+
+*pages/api/[...nextauth].ts: Handles authentication via NextAuth.
+*pages/api/auth.ts: Manages signup and login.
+*pages/api/activities/read_create.ts: Handles creating and reading activities.
+*pages/api/activities/edit_delete.ts: Handles editing and deleting activities.
+\*pages/CRUD/add.tsx: Frontend page to add a new activity.

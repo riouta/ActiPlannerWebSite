@@ -54,5 +54,6 @@ export default NextAuth({
   jwt: {
     secret: process.env.JWT_SECRET,
   },
-  secret: process.env.SECRET
+  secret: process.env.SECRET,
+  debug: true, // Enable debug for more detailed logs
 });
