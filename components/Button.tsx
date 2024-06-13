@@ -8,9 +8,11 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset"; // Define type prop to accept specific values
 };
 
+
+
 const Button: React.FC<ButtonProps> = ({ children, disabled, onClick, type }) => {
   return (
-    <button onClick={onClick} disabled={disabled} type={type}>
+    <button className="button" onClick={onClick} disabled={disabled} type={type}>
       {children}
     </button>
   );

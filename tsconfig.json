@@ -31,7 +31,8 @@
     "src/**/*.ts",
     "pages/**/*.ts",
     "pages/**/*.tsx", // Include pages directory
-    "prisma/**/*.ts"
+    "prisma/**/*.ts",
+    "next-auth.d.ts",
   ],
   "exclude": ["node_modules", "scripts"]
 }

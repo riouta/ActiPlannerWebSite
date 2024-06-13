@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Button from '../components/Button';
 import ErrorAlert from '../components/ErrorAlert';
 import LoadingSpinner from '../components/LoadingSpinner';
-import axios from 'axios';
 
 const SignupPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -13,31 +13,34 @@ const SignupPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const handleSignup = async () => {
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   setError('Passwords do not match');
+    //   return;
+    // }
 
     try {
       setLoading(true);
       setError('');
 
-      // Performs client-side validation
-      // if (!username || !email || !password || !confirmPassword) {
-      //   setError('All fields are required');
-      //   return;
-      // }
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, username }),
+      });
 
-      const response = await axios.put('/api/auth', { newUsername: username, newEmail: email, newPassword: password });
+      const data = await response.json();
+      
       if (response.status === 201) {
         // Successful signup
-        console.log(response.data.message);
+        //console.log(response.data.message);
         window.location.href = '/login';
       } else {
-        setError('Failed to sign up. Please try again later.');
+        setError(data.error ||'Failed to sign up. Please try again later.');
       }
     } catch (error) {
-      setError('Failed to sign up. Please try again later.');
+      setError('Failed to sign up.');
     } finally {
       setLoading(false);
     }

@@ -4,9 +4,17 @@ import { Activity } from '../types';
 //import { PrismaClient } from '@prisma/client';
 //const prisma = new PrismaClient();
 
-const API_BASE_URL = 'http://localhost:3000/api'; // Base URL of your API server
+const API_BASE_URL = 'http://localhost:3000/api'; // Base URL of API server
 
+// Function to create activity 
 export const createActivity = async (data: any): Promise<any> => {
+    try {
+        const response: AxiosResponse<any> = await axios.post(`${API_BASE_URL}/activities`, data);
+        return response.data;
+      } catch (error) {
+        handleRequestError(error as AxiosError);
+        throw error;
+      }
     
 };
 
@@ -32,6 +40,13 @@ export const fetchActivities = async (): Promise<Activity[]> => {
 };
 
 export const updateActivity = async (id: string, data: any): Promise<any> => {
+    try {
+        const response: AxiosResponse<any> = await axios.put(`${API_BASE_URL}/activities/${id}`, data);
+        return response.data;
+      } catch (error) {
+        handleRequestError(error as AxiosError);
+        throw error;
+      }
     
 };
 

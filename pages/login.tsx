@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
       setLoading(true);
       setError('');
 
-      const response = await fetch('/api/auth', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const LoginPage: React.FC = () => {
         // Successful login
         localStorage.setItem('token', data.token);
         console.log(data.token);
-        window.location.href = '/CRUD/add';
+        //window.location.href = '/CRUD/add';
       } else {
         setError(data.error || 'Failed to login. Please check your credentials.');
       }

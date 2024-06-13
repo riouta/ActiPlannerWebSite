@@ -44,46 +44,51 @@ const HomePage : React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="spinner">Loading...</div>;
   }
 
   return (
     <>
-      <div className="container mx-auto mt-8 max-w-[560px]">
+    <Head>
+      <title>Activity</title>
+    </Head>
+
+    <div className="container">
+      <h1 >Welcome to ActiPlanner</h1>
+      {error && <div className="error-alert">{error}</div>}
+      <div className="activity-list">
         <div className="flex justify-between items-center pb-4 border-b border-dashed border-gray-900 mb-4">
-          <h1 className="text-3xl font-semibold">Activities</h1>
-          <Link
-            className="bg-green-600 hover:bg-opacity-80 text-white rounded-lg px-4 py-2 duration-200"
-            href="/CRUD/add"
-          >
-            Create New
+          <h2 className="text-3xl font-semibold">Activities</h2>
+          <Link href="/CRUD/add">
+            <button>Add a new activity</button>
           </Link>
         </div>
         <ul>
           {activities.map((activity) => (
-            <li key={activity.id} className="py-2 flex justify-between w-full">
+            <li key={activity.id} className="activity-card">
               <span>
                 <strong>{activity.name}</strong> - {activity.description}
               </span>
-              <span className="flex gap-2">
-                <Link className="text-blue-700 underline hover:no-underline" href={`/${activity.id}/edit`}>Edit</Link>
-                <Link className="text-red-500 underline hover:no-underline" href={`/${activity.id}/delete`}>Delete</Link>
-              </span>
+              <div className="flex gap-2 mt-2">
+                <Link href={`/${activity.id}/edit`}>Edit</Link>
+                <Link  href={`/${activity.id}/delete`}>Delete</Link>
+              </div>
             </li>
           ))}
-          {activities.length === 0 && <div className="py-2">No data</div>}
+          {activities.length === 0 && <div>No activities available</div>}
         </ul>
       </div>
-      <Link href="/login">
-      <button className="mr-2">Login</button>
-      </Link>
-      <Link href="/signup">
-      <button className="mr-2">Sign up</button>
-      </Link>
-      <Head>
-        <title>Activity</title>
-      </Head>
-    </>
+      <div className="flex mt-4">
+        <Link href="/login">
+          <button>Login</button>
+        </Link>
+        <Link href="/signup">
+          <button>Sign up</button>
+        </Link>
+      </div>
+    </div>
+    <Footer /> 
+  </>
   );
 };
 

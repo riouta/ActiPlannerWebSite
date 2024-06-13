@@ -8,12 +8,12 @@ const Header: React.FC = () => {
             <nav>
                 <ul>
                     <li>
-                        <Link href="/"><div>Home</div>
+                        <Link href="/"><a>Home</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/activities">
-                        <div>Activities</div>
+                        <a>Activities</a>
                         </Link>
                     </li>
                     {/* Add more navigation links as needed */}
