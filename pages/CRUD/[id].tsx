@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { PrismaClient } from '@prisma/client';
+import Footer from '../../components/Footer';
 
 interface Activity {
   id: string;
@@ -38,6 +39,7 @@ const ActivityDetailPage: React.FC = () => {
   }
 
   return (
+    <>
     <div>
       <h1>{activity.name}</h1>
       <p>{activity.description}</p>
@@ -52,6 +54,8 @@ const ActivityDetailPage: React.FC = () => {
         router.push('/');
       }}>Delete</button>
     </div>
+    <Footer/>
+    </>
   );
 };
 

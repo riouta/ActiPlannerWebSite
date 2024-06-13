@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Button from '../components/Button';
 import ErrorAlert from '../components/ErrorAlert';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Footer from '../components/Footer';
+
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -41,7 +43,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
+    <div className="login-container">
       <h2>Login</h2>
       {error && <ErrorAlert message={error} />}
       <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
@@ -63,10 +66,10 @@ const LoginPage: React.FC = () => {
           {loading ? <LoadingSpinner /> : 'Login'}
         </Button>
       </form>
-      <Link href="/signup">
-        <button>Sign Up</button>
-      </Link>
-    </div>
+      <p>Don't have an account? <Link href="/signup">Sign Up</Link></p>
+      </div>
+      <Footer />
+   </>
   );
 };
 

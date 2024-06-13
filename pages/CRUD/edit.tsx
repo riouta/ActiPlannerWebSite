@@ -1,6 +1,7 @@
 import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import Footer from '../../components/Footer';
 
 
 const EditActivityPage: React.FC = () => {
@@ -121,6 +122,7 @@ const EditActivityPage: React.FC = () => {
           </button>
         </div>
       </div>
+      < Footer/>
     </>
   );
 };

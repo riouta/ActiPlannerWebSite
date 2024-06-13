@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Footer from '../../components/Footer';
 
 const DeleteActivityPage = () => {
   const router = useRouter();
@@ -72,6 +73,7 @@ const DeleteActivityPage = () => {
       <Head>
         <title>Delete Activity</title>
       </Head>
+      <Footer/>
     </>
   );
 };

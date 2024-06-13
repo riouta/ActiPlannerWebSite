@@ -2,6 +2,7 @@ import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 //import Head from "next/head";
+import Footer from '../../components/Footer';
 
 const AddActivityPage: React.FC = () => {
   const { data: session } = useSession();
@@ -125,6 +126,7 @@ const AddActivityPage: React.FC = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
