@@ -19,11 +19,12 @@ const HomePage : React.FC = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const response = await fetch("/api/activities");
+        const response = await fetch("/api/activities/read_create");
         const data = await response.json();
 
         if (Array.isArray(data)) {
@@ -40,7 +41,13 @@ const HomePage : React.FC = () => {
       }
     };
 
-    fetchActivities();
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      fetchActivities();
+    } else {
+      setIsLoggedIn(false);
+    }
   }, []);
 
   if (loading) {
@@ -49,6 +56,7 @@ const HomePage : React.FC = () => {
 
   return (
     <>
+    <Header />
     <Head>
       <title>Activity</title>
     </Head>

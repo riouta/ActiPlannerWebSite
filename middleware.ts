@@ -12,6 +12,6 @@ export async function middleware(req:any) {
   return NextResponse.next();
 }
 
-export const config = {
-  matcher: ['/CRUD/:path*'], // Protect all routes under /CRUD
-};
+ export const config = {
+   matcher: ['/CRUD/:path*'], // Protect all routes under /CRUD
+ };

@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import prisma from '/../../prisma/prisma';
-
+import prisma from '../../../prisma/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {

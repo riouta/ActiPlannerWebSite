@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Button from '../components/Button';
 import ErrorAlert from '../components/ErrorAlert';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -7,6 +8,7 @@ import Footer from '../components/Footer';
 
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ const LoginPage: React.FC = () => {
       setLoading(true);
       setError('');
 
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +33,7 @@ const LoginPage: React.FC = () => {
         // Successful login
         localStorage.setItem('token', data.token);
         console.log(data.token);
-        //window.location.href = '/CRUD/add';
+        router.push('/CRUD/add');
       } else {
         setError(data.error || 'Failed to login. Please check your credentials.');
       }
