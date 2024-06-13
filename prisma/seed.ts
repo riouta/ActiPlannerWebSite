@@ -4,6 +4,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+
+  //await prisma.activity.deleteMany({});
+
   // Create sample activities
   // const activity1 = await prisma.activity.create({
   //   data: {
@@ -26,22 +29,21 @@ async function main() {
   //   },
   // });
   // //upsert fct will only create new activity if no activity matches the where cdt
-  // const activity3 = await prisma.activity.upsert({
-  //   where: { name: 'sheep riding'},
-  //   update: {},
-  //   create: {
-  //     name: 'sheep riding',
-  //     description: 'A fun sheep riding.',
-  //     date: new Date('2024-01-01'),
-  //     time: '07:00',
-  //     adress: '13 sheep field', 
-  //   },
-  // });
+  const activity3 = await prisma.activity.upsert({
+    where: { name: 'bunny hunt'},
+    update: {},
+    create: {
+      name: 'bunny hunt',
+      description: 'A fun acti',
+      date: new Date('2024-03-01'),
+      time: '08:00',
+      adress: '1 bun field', 
+    },
+  });
 
   const activities = await prisma.activity.findMany()
   console.log(activities)
 
-  
   const users = await prisma.user.findMany()
   console.log(users)
 

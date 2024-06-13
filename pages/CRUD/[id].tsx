@@ -24,7 +24,7 @@ const ActivityDetailPage: React.FC = () => {
     if (id) {
       const fetchActivity = async () => {
         try {
-          const response = await fetch(`/api/activities`);
+          const response = await fetch(`/api/activities/read_create`);
           const data = await response.json();
           setActivity(data);
         } catch (error) {
@@ -52,11 +52,11 @@ const ActivityDetailPage: React.FC = () => {
       <p>{activity.date}</p>
       <p>{activity.time}</p>
       <p>{activity.adress}</p>
-      <Link href={`/CRUD/edit`} passHref legacyBehavior>
+      <Link href={`/CRUD/edit/${activity.id}`} passHref legacyBehavior>
         <button>Edit</button>
       </Link>
       <button onClick={async () => {
-        await fetch(`/api/activities`, { method: 'DELETE' });
+        await fetch(`/api/activities/${activity.id}`, { method: 'DELETE' });
         router.push('/');
       }}>Delete</button>
     </div>

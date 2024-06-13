@@ -1,19 +1,12 @@
-//route handler for operations related to editin & deleting specific task by id
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import prisma from '/../../prisma/prisma';
+import prisma from '../../../prisma/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
 
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
-
-  }
-
-  if (!session.user || !session.user.id) {
-    res.status(400).json({ error: 'User information is missing' });
-    return;
   }
 
   const userId = Number(session.user.id);
@@ -37,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const { name, description, date, time, adress } = req.body;
         const updatedActivity = await prisma.activity.update({
-          where: { id: activityId, userId: userId},
+          where: { id: activityId, userId: userId },
           data: { name, description, date, time, adress },
         });
         return res.status(200).json(updatedActivity);

@@ -1,11 +1,11 @@
 // middleware.ts
-import { getToken } from 'next-auth/jwt';
+import { getSession } from 'next-auth/react';
 import { NextResponse } from 'next/server';
 
 export async function middleware(req:any) {
-  const token = await getToken({ req, secret: process.env.JWT_SECRET });
+  const session = await getSession({ req });
 
-  if (!token) {
+  if (!session) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 

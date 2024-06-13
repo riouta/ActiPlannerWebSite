@@ -20,7 +20,7 @@ const EditActivityPage: React.FC = () => {
     if (id) {
       const fetchActivity = async () => {
         try {
-          const response = await fetch(`/api/activities`);
+          const response = await fetch(`/api/activities/${id}`);
           const data = await response.json();
           setActivity(data);
           setLoading(false);
@@ -39,7 +39,7 @@ const EditActivityPage: React.FC = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch(`/api/activities`, {
+      const response = await fetch(`/api/activities/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(activity),

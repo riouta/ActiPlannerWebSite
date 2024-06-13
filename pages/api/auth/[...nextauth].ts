@@ -29,19 +29,19 @@ export default NextAuth({
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async jwt({ token, user }) {
+    async session({ session, user }) {
       if (user) {
-        token.id = user.id;  
+        session.user.id = user.id;  
       }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string;
-      };
-  
       return session;
     },
+    // async session({ session, token }) {
+    //   if (token) {
+    //     session.user.id = token.id as string;
+    //   };
+  
+    //   return session;
+    // },
   },
 
   pages: {
@@ -52,11 +52,12 @@ export default NextAuth({
     newUser: undefined
   },
   session: {
-    strategy: 'jwt',
+    strategy: 'database',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  jwt: {
-    secret: process.env.JWT_SECRET,
-  },
-  secret: process.env.SECRET,
+  // jwt: {
+  //   secret: process.env.JWT_SECRET,
+  // },
+  //secret: process.env.SECRET,
   debug: true, // Enable debug for more detailed logs
 });

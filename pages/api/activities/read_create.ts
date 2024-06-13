@@ -8,13 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.log('Session:', session);
 
-  if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-   if (!session.user || !session.user.id) {
-     return res.status(400).json({ error: 'User information is missing' });  
+   if (!session) {
+     return res.status(401).json({ error: 'Unauthorized' });
    }
+
+  //  if (!session.user || !session.user.id) {
+  //    return res.status(400).json({ error: 'User information is missing' });  
+  //  }
 
   const userId = Number(session.user.id);
 

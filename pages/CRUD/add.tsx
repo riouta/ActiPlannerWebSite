@@ -1,136 +1,102 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import Head from "next/head";
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import Head from 'next/head';
+//import styles from '../../styles/AddActivityPage.module.css'; // Importing CSS module
 
 const AddActivityPage: React.FC = () => {
-  const { data: session } = useSession();
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [adress, setAdress] = useState('');
   const router = useRouter();
-  const [activity, setActivity] = useState({
-    name: "",
-    description: "",
-    date: "", 
-    time: "", 
-    adress: "",
-  });
 
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setActivity({ ...activity, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async () => {
-    if (!session) {
-      setErrorMessage('You must be logged in to create an activity');
-      return;
-    }
-
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     try {
-      const response = await fetch("/api/activities/read_create", {
+      const response = await fetch('/api/activities', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(activity),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, description, date, time, adress }),
       });
+
       if (response.ok) {
-        setSuccessMessage("Activity has been added");
-        setActivity({
-          name: "",
-          description: "",
-          date: "", 
-          time: "", 
-          adress: "",
-      });
-      setErrorMessage(null);
-      window.location.href = '/CRUD/[id]';
-      }
-      else {
-        // Handle error response from the server
-        const errorData = await response.json();
-        setErrorMessage(errorData.error || 'Failed to create activity');
-        setSuccessMessage(null);
-        //console.error('Failed to create activity:', response.statusText);
+        router.push('/');
+      } else {
+        console.error('Failed to add activity');
       }
     } catch (error) {
-      //console.error('Error creating activity:', error);
-      setErrorMessage('Error creating activity');
-      setSuccessMessage(null);
+      console.error('Error:', error);
     }
   };
 
   return (
     <>
-    <Header />
-    <Head>
-      <title>Activity</title>
-    </Head>
-
-      <div className="container mx-auto mt-8 max-w-[560px]">
-        <div className="flex justify-between items-center pb-4 border-b border-dashed border-gray-900 mb-4">
-          <h1 className="text-3xl font-semibold">Add an activity</h1>
-        </div>
-        <form>
-          <div className="mb-4">
-            <label>Name</label>
+      <Header />
+      <Head>
+        <title>Add Activity</title>
+      </Head>
+      <div className={"container"}>
+        <h1 className={"title"}>Add a New Activity</h1>
+        <form onSubmit={handleSubmit} className={"form"}>
+          <label className={"label"}>
+            Name:
             <input
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-md block w-full"
               type="text"
-              name="name"
-              value={activity.name}
-              onChange={onChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className={"input"}
             />
-          </div>
-          <div className="mb-4">
-            <label>Description</label>
+          </label>
+          <label className={"label"}>
+            Description:
             <input
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-md block w-full"
               type="text"
-              name="description"
-              value={activity.description}
-              onChange={onChange}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              className={"input"}
             />
-          </div>
-          <div className="mb-4">
-            <label>Date</label>
+          </label>
+          <label className={"label"}>
+            Date:
             <input
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-md block w-full"
               type="date"
-              name="date"
-              value={activity.date}
-              onChange={onChange}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+              className={"input"}
             />
-          </div>
-          <div className="mb-4">
-            <label>Time</label>
+          </label>
+          <label className={"label"}>
+            Time:
             <input
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-md block w-full"
               type="time"
-              name="time"
-              value={activity.time}
-              onChange={onChange}
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              required
+              className={"input"}
             />
-          </div>
-          <div className="mb-4">
-            <label>Adress</label>
+          </label>
+          <label className={"label"}>
+            Address:
             <input
-              className="mt-1 px-4 py-2 border border-gray-300 rounded-md block w-full"
               type="text"
-              name="adress"
-              value={activity.adress}
-              onChange={onChange}
+              value={adress}
+              onChange={(e) => setAdress(e.target.value)}
+              required
+              className={"input"}
             />
-          </div>
-        </form>
-        {successMessage && <div className="text-green-600">{successMessage}</div>}
-        {errorMessage && <div className="text-red-600">{errorMessage}</div>}
-        <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-md" onClick={handleSubmit}>
-            Add
+          </label>
+          <button type="submit" className={"button"}>
+            Add Activity
           </button>
-        </div>
+        </form>
       </div>
       <Footer />
     </>

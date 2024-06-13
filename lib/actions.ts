@@ -5,7 +5,7 @@ import { getSession } from 'next-auth/react';
 
 export async function serverAction() {
   const session = await getSession();
-  const userRole = session?.user?.role as 'SimpleUser' | 'Moderator' | 'Admin'; // Cast role
+  const userRole = session?.user?.role as 'SimpleUser' | 'Admin'; // Cast role
 
 
   if (userRole !== 'Admin') {
