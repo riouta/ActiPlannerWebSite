@@ -19,6 +19,7 @@ body {
     font-size: 2.5rem;
     color: #2c3e50;
     margin-bottom: 20px;
+    text-align: center;
   }
   
   /* Page header styles */
@@ -157,9 +158,9 @@ body {
   footer {
     background-color: #f2f2f2;
     color: #333;
-    padding: 1rem;
+    padding: 0.1rem;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.6rem;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -168,7 +169,7 @@ body {
   header {
     background-color: #3498db;
     color: white;
-    padding: 1rem;
+    padding: 0.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -222,6 +223,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
   }
   
   .signup-container h2 {
@@ -248,4 +250,13 @@ body {
     padding: 10px;
     font-size: 1rem;
     margin-top: 10px;
+    justify-content: flex-end;
   }
+
+  .image-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }

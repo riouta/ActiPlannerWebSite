@@ -12,9 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // if (!session.user || !session.user.id) {
-  //   return res.status(400).json({ error: 'User information is missing' });  
-  // }
+   if (!session.user || !session.user.id) {
+     return res.status(400).json({ error: 'User information is missing' });  
+   }
 
   const userId = Number(session.user.id);
 
@@ -29,7 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(500).json({ error: 'Failed to fetch activities', details: error.message });
       }
       
-
     case 'POST':
       try {
         const { name, description, date, time, adress } = req.body;
@@ -52,7 +51,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(500).json({ error: 'Failed to create activity', details: error.message });
       }
       
-
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       return res.status(405).end(`Method ${req.method} Not Allowed`);

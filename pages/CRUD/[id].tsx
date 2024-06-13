@@ -37,7 +37,7 @@ const ActivityDetailPage: React.FC = () => {
   }, [id]);
 
   if (!activity) {
-    return <div>Loading...</div>;
+    return <div>Loading</div>;
   }
 
   return (

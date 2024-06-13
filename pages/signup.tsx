@@ -16,10 +16,10 @@ const SignupPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const handleSignup = async () => {
-    // if (password !== confirmPassword) {
-    //   setError('Passwords do not match');
-    //   return;
-    // }
+     if (password !== confirmPassword) {
+       setError('Passwords do not match');
+       return;
+     }
 
     try {
       setLoading(true);

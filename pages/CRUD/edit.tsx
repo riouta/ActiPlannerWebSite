@@ -55,7 +55,7 @@ const EditActivityPage: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading</div>;
   }
 
   return (
