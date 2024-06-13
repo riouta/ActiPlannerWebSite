@@ -1,8 +1,9 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-//import Head from "next/head";
+import Head from "next/head";
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 const AddActivityPage: React.FC = () => {
   const { data: session } = useSession();
@@ -62,6 +63,11 @@ const AddActivityPage: React.FC = () => {
 
   return (
     <>
+    <Header />
+    <Head>
+      <title>Activity</title>
+    </Head>
+
       <div className="container mx-auto mt-8 max-w-[560px]">
         <div className="flex justify-between items-center pb-4 border-b border-dashed border-gray-900 mb-4">
           <h1 className="text-3xl font-semibold">Add an activity</h1>

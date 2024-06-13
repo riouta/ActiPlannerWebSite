@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 const DeleteActivityPage = () => {
   const router = useRouter();
@@ -44,6 +45,11 @@ const DeleteActivityPage = () => {
 
   return (
     <>
+    <Header />
+    <Head>
+      <title>Activity</title>
+    </Head>
+
       <div className="container mx-auto mt-8 max-w-[560px]">
         <div className="flex justify-between items-center pb-4 border-b border-dashed border-gray-900 mb-4">
           <h1 className="text-3xl font-semibold">Delete Activity</h1>
@@ -57,6 +63,7 @@ const DeleteActivityPage = () => {
             <Link
               href="/"
               className="text-center bg-gray-300 hover:bg-opacity-80 text-black rounded-lg px-4 py-2 duration-200 w-full"
+              passHref legacyBehavior
             >
               Cancel
             </Link>

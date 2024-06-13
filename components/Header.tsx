@@ -8,11 +8,11 @@ const Header: React.FC = () => {
             <nav>
                 <ul>
                     <li>
-                        <Link href="/"><a>Home</a>
+                        <Link href="/" passHref legacyBehavior><a>Home</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/activities">
+                        <Link href="/activities" passHref legacyBehavior>
                         <a>Activities</a>
                         </Link>
                     </li>
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
                 </ul>
             </nav>
             <div className="logo">
-                <Link href="/">
+                <Link href="/" passHref legacyBehavior>
                 <div>ActiPlanner</div>
                 </Link>
             </div>

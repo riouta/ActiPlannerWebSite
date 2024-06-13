@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { PrismaClient } from '@prisma/client';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import Head from 'next/head';
 
 interface Activity {
   id: string;
@@ -40,13 +42,17 @@ const ActivityDetailPage: React.FC = () => {
 
   return (
     <>
+    <Header />
+    <Head>
+      <title>Activity</title>
+    </Head>    
     <div>
       <h1>{activity.name}</h1>
       <p>{activity.description}</p>
       <p>{activity.date}</p>
       <p>{activity.time}</p>
       <p>{activity.adress}</p>
-      <Link href={`/CRUD/edit`}>
+      <Link href={`/CRUD/edit`} passHref legacyBehavior>
         <button>Edit</button>
       </Link>
       <button onClick={async () => {

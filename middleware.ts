@@ -13,5 +13,5 @@ export async function middleware(req:any) {
 }
 
  export const config = {
-   matcher: ['/CRUD/:path*'], // Protect all routes under /CRUD
+   matcher: ['/CRUD/[id]/:path*'], // Protect all routes under /CRUD/[id]
  };

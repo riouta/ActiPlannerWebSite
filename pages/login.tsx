@@ -5,7 +5,8 @@ import Button from '../components/Button';
 import ErrorAlert from '../components/ErrorAlert';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Footer from '../components/Footer';
-
+import Header from '../components/Header';
+import Head from 'next/head';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -46,6 +47,11 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
+    <Header />
+    <Head>
+      <title>Activity</title>
+    </Head>
+
     <div className="login-container">
       <h2>Login</h2>
       {error && <ErrorAlert message={error} />}
@@ -68,7 +74,7 @@ const LoginPage: React.FC = () => {
           {loading ? <LoadingSpinner /> : 'Login'}
         </Button>
       </form>
-      <p>Don't have an account? <Link href="/signup">Sign Up</Link></p>
+      <p>Don't have an account? <Link href="/signup" passHref legacyBehavior>Sign Up</Link></p>
       </div>
       <Footer />
    </>

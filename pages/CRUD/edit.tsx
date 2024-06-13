@@ -2,7 +2,7 @@ import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import Head from "next/head";
 import Footer from '../../components/Footer';
-
+import Header from '../../components/Header';
 
 const EditActivityPage: React.FC = () => {
   const router = useRouter();
@@ -60,6 +60,11 @@ const EditActivityPage: React.FC = () => {
 
   return (
     <>
+    <Header />
+    <Head>
+      <title>Activity</title>
+    </Head>
+
       <div className="container mx-auto mt-8 max-w-[560px]">
         <div className="flex justify-between items-center pb-4 border-b border-dashed border-gray-900 mb-4">
           <h1 className="text-3xl font-semibold">Edit activity</h1>

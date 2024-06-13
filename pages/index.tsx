@@ -29,9 +29,10 @@ const HomePage : React.FC = () => {
 
         if (Array.isArray(data)) {
           setActivities(data);
-        } else {
-          setError("Invalid data format");
-        }
+        } 
+        // else {
+        //   setError("Invalid data format");
+        // }
 
       } catch (error) {
         console.error("Error fetching activities:", error);
@@ -66,10 +67,12 @@ const HomePage : React.FC = () => {
       {error && <div className="error-alert">{error}</div>}
       <div className="activity-list">
         <div className="flex justify-between items-center pb-4 border-b border-dashed border-gray-900 mb-4">
-          <h2 className="text-3xl font-semibold">Activities</h2>
-          <Link href="/CRUD/add">
+          
+          {isLoggedIn && (
+            <Link href="/CRUD/add" passHref legacyBehavior>
             <button>Add a new activity</button>
           </Link>
+          )}
         </div>
         <ul>
           {activities.map((activity) => (
@@ -78,24 +81,28 @@ const HomePage : React.FC = () => {
                 <strong>{activity.name}</strong> - {activity.description}
               </span>
               <div className="flex gap-2 mt-2">
-                <Link href={`/${activity.id}/edit`}>Edit</Link>
-                <Link  href={`/${activity.id}/delete`}>Delete</Link>
+                <Link href={`/${activity.id}/edit`} passHref legacyBehavior>Edit</Link>
+                <Link  href={`/${activity.id}/delete`} passHref legacyBehavior>Delete</Link>
               </div>
             </li>
           ))}
           {activities.length === 0 && <div>No activities available</div>}
         </ul>
-      </div>
-      <div className="flex mt-4">
-        <Link href="/login">
-          <button>Login</button>
-        </Link>
-        <Link href="/signup">
-          <button>Sign up</button>
-        </Link>
-      </div>
-    </div>
-    <Footer /> 
+        {!isLoggedIn && (
+          
+          <div className="flex mt-4">
+            <Link href="/login" passHref legacyBehavior>
+              <button>Login</button>
+            </Link>
+            <Link href="/signup" passHref legacyBehavior>
+              <button>Sign up</button>
+            </Link>
+          </div>
+          
+        )}
+        </div>
+        </div>
+        <Footer /> 
   </>
   );
 };

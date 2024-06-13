@@ -5,6 +5,7 @@ import ErrorAlert from '../components/ErrorAlert';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Head from 'next/head';
 
 const SignupPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -50,7 +51,11 @@ const SignupPage: React.FC = () => {
 
   return (
     <>
-    
+    <Header />
+    <Head>
+      <title>Activity</title>
+    </Head>
+
       <div className="signup-container">
         <h2>Sign Up</h2>
         {error && <ErrorAlert message={error} />}
@@ -90,7 +95,7 @@ const SignupPage: React.FC = () => {
             {loading ? <LoadingSpinner /> : 'Sign Up'}
           </Button>
         </form>
-        <p>Already have an account? <Link href="/login">Login</Link></p>
+        <p>Already have an account? <Link href="/login" passHref legacyBehavior>Login</Link></p>
       </div>
       <Footer />
     </>
